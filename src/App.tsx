@@ -6,6 +6,7 @@ import HomePage from './HomePage';
 import ProductCard from './ProductCard';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import sweetsImg from './assest/sweets.png';
 
 const WhatsAppIcon = ({ size = 24, className = "" }: { size?: number, className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -20,7 +21,7 @@ const DELIVERY_CHARGE_PER_KG_OTHER = 30;
 
 // Top Announcement
 const TopAnnouncement = () => (
-  <div className="overflow-hidden bg-green-600 py-2 text-white">
+  <div className="overflow-hidden bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 py-2 text-white">
     <div className="announcement-track whitespace-nowrap px-3 text-xs font-medium sm:px-4 sm:text-sm">
       <span>Sri Rama Navami Subhakankshalu! Celebrate with Neelagiri Foods!</span>
     </div>
@@ -40,6 +41,7 @@ export default function App() {
   const [currentView, setCurrentView] = useState<'home' | 'store'>('home');
   const [activeCategory, setActiveCategory] = useState(CATEGORIES[0].id);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isWelcomeOpen, setIsWelcomeOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   
   // Cart state 
@@ -53,7 +55,7 @@ export default function App() {
   const addToCart = (id: string, weight: number = 250) => {
     const product = PRODUCTS.find(p => p.id === id);
     if (product) {
-      setToastMessage(`Added ${product.name} to cart!`);
+      setToastMessage(`Added ${product.name.toUpperCase()} to cart!`);
       setTimeout(() => setToastMessage(''), 3000);
     }
     setCart(prev => {
@@ -115,22 +117,23 @@ export default function App() {
         
         {/* Header */}
         <header className="border-b border-gray-100 bg-white/90 shadow-sm backdrop-blur-md">
-        <div className="mx-auto flex h-16 w-full max-w-[1400px] items-center gap-3 px-4 sm:h-20 sm:gap-4 sm:px-6 lg:px-8">
-          <div className="flex min-w-0 flex-1 items-center lg:flex-none lg:min-w-[15rem]">
+        <div className="mx-auto flex h-16 w-full max-w-[1400px] items-center gap-3 px-4 sm:h-[4.75rem] sm:gap-4 sm:px-6 lg:px-8">
+          <div className="flex min-w-0 flex-1 items-center lg:flex-none lg:min-w-[12.5rem]">
             <button 
               className="mr-1 rounded-md p-2 text-gray-600 hover:bg-gray-100 lg:hidden"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <Menu size={24} />
             </button>
-            <button onClick={() => { setCurrentView('home'); setSearchQuery(''); }} className="group flex min-w-0 items-center space-x-2 text-left">
-              <span className="truncate text-lg font-display font-bold tracking-tight text-brand-red sm:text-2xl">Neelagiri <span className="text-brand-dark transition-colors group-hover:text-brand-red">Foods</span></span>
+            <button onClick={() => { setCurrentView('home'); setSearchQuery(''); }} className="group flex min-w-0 max-w-[11rem] flex-col items-start text-left sm:max-w-none">
+              <span className="truncate text-lg font-display font-bold leading-none tracking-tight text-brand-red sm:text-2xl">Neelagiri <span className="text-green-900 transition-colors group-hover:text-green-800">Foods</span></span>
+              <span className="mt-1 text-[8px] font-semibold uppercase leading-none tracking-[0.18em] text-amber-700 sm:text-[9px]">The flavours of telugu</span>
             </button>
           </div>
           
           <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-center lg:px-4">
-             <div className="flex w-full max-w-5xl items-center justify-center gap-1 xl:gap-4">
-               <button onClick={() => { setCurrentView('home'); setSearchQuery(''); }} className={twMerge("text-[13px] xl:text-sm font-bold transition-all px-3 py-2 rounded-full whitespace-nowrap", currentView === 'home' && !searchQuery ? "text-brand-red bg-brand-red/5" : "text-gray-600 hover:text-brand-red hover:bg-gray-50")}>Home</button>
+             <div className="flex w-full max-w-5xl items-center justify-center gap-1 xl:gap-2">
+               <button onClick={() => { setCurrentView('home'); setSearchQuery(''); }} className={twMerge("text-xs xl:text-[13px] font-bold uppercase tracking-[0.08em] transition-all px-2.5 py-2 rounded-full whitespace-nowrap", currentView === 'home' && !searchQuery ? "text-brand-red bg-brand-red/5" : "text-gray-600 hover:text-brand-red hover:bg-gray-50")}>HOME</button>
                {CATEGORIES.map(category => (
                  <button
                    key={category.id}
@@ -139,16 +142,16 @@ export default function App() {
                      setCurrentView('store');
                      setSearchQuery('');
                    }}
-                   className={twMerge("text-[13px] xl:text-sm font-bold transition-all px-3 py-2 rounded-full whitespace-nowrap", currentView === 'store' && activeCategory === category.id && !searchQuery ? "text-brand-red bg-brand-red/5" : "text-gray-600 hover:text-brand-red hover:bg-gray-50")}
+                   className={twMerge("text-xs xl:text-[13px] font-bold uppercase tracking-[0.06em] transition-all px-2.5 py-2 rounded-full whitespace-nowrap", currentView === 'store' && activeCategory === category.id && !searchQuery ? "text-brand-red bg-brand-red/5" : "text-gray-600 hover:text-brand-red hover:bg-gray-50")}
                  >
                    {category.name}
                  </button>
                ))}
-               <button onClick={() => { setCurrentView('home'); setTimeout(() => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }} className="text-[13px] xl:text-sm font-bold transition-all px-3 py-2 rounded-full whitespace-nowrap text-gray-600 hover:text-brand-red hover:bg-gray-50">Contact Us</button>
+               <button onClick={() => { setCurrentView('home'); setTimeout(() => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }} className="text-xs xl:text-[13px] font-bold uppercase tracking-[0.08em] transition-all px-2.5 py-2 rounded-full whitespace-nowrap text-gray-600 hover:text-brand-red hover:bg-gray-50">CONTACT US</button>
              </div>
           </div>
           
-          <div className="flex flex-1 items-center justify-end gap-1 sm:gap-2 lg:min-w-[15rem] lg:flex-none">
+          <div className="flex flex-1 items-center justify-end gap-1 sm:gap-2 lg:min-w-[12.5rem] lg:flex-none">
             <div className="group relative flex items-center">
               <Search size={18} className="absolute left-3 text-gray-400 group-focus-within:text-brand-red transition-colors" />
               <input
@@ -161,7 +164,7 @@ export default function App() {
                     setCurrentView('store');
                   }
                 }}
-                className="w-[100px] rounded-full border border-gray-200 bg-gray-50 py-2 pl-10 pr-4 text-sm transition-all placeholder:text-xs placeholder:text-gray-400 focus:bg-white focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/20 xs:w-32 sm:w-48 sm:placeholder:text-sm lg:w-56"
+                className="w-[100px] rounded-full border border-gray-200 bg-gray-50 py-2 pl-10 pr-4 text-sm transition-all placeholder:text-xs placeholder:text-gray-400 focus:bg-white focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/20 xs:w-32 sm:w-48 sm:placeholder:text-sm lg:w-44 xl:w-56"
               />
             </div>
             
@@ -251,7 +254,10 @@ export default function App() {
               className="fixed inset-y-0 left-0 w-[85%] max-w-sm bg-white z-50 shadow-2xl flex flex-col pt-safe-top"
             >
               <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-                <h2 className="text-xl font-display font-bold text-brand-red">Neelagiri Foods</h2>
+                <div>
+                  <h2 className="text-xl font-display font-bold text-brand-red">Neelagiri <span className="text-green-900">Foods</span></h2>
+                  <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-amber-700">The flavours of telugu</p>
+                </div>
                 <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100">
                   <X size={24} />
                 </button>
@@ -268,7 +274,7 @@ export default function App() {
                         }}
                         className={twMerge("w-full text-left px-4 py-3 rounded-xl transition-all font-medium", currentView === 'home' ? "bg-brand-red/10 text-brand-red" : "text-gray-700 active:bg-gray-50")}
                       >
-                        Home
+                        HOME
                       </button>
                       <button
                         onClick={() => {
@@ -278,7 +284,7 @@ export default function App() {
                         }}
                         className={twMerge("w-full text-left px-4 py-3 rounded-xl transition-all font-medium", currentView === 'store' ? "bg-brand-red/10 text-brand-red" : "text-gray-700 active:bg-gray-50")}
                       >
-                        Shop
+                        SHOP
                       </button>
                       <button
                         onClick={() => {
@@ -290,7 +296,7 @@ export default function App() {
                         }}
                         className="w-full text-left px-4 py-3 rounded-xl transition-all font-medium text-gray-700 active:bg-gray-50"
                       >
-                        Contact Us
+                        CONTACT US
                       </button>
                     </div>
                   </div>
@@ -328,7 +334,7 @@ export default function App() {
                           onClick={() => scrollToProduct(product.id)}
                           className="w-full text-left px-4 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 active:text-brand-red transition-colors"
                         >
-                          {product.name}
+                          <span className="uppercase">{product.name}</span>
                         </button>
                       ))}
                     </div>
@@ -387,7 +393,7 @@ export default function App() {
                           <img src={item.product.image} alt={item.product.name} className="w-20 h-20 object-cover rounded-lg bg-gray-100" />
                           <div className="flex-1 flex flex-col justify-between">
                             <div>
-                              <h4 className="font-semibold text-sm line-clamp-1">{item.product.name} <span className="text-xs text-gray-500">({item.weightLabel})</span></h4>
+                              <h4 className="font-semibold text-sm uppercase line-clamp-1">{item.product.name} <span className="text-xs text-gray-500 normal-case">({item.weightLabel})</span></h4>
                               <p className="text-brand-red font-bold text-sm">₹{item.calculatedPrice}</p>
                             </div>
                             <div className="flex items-center justify-between mt-2">
@@ -475,7 +481,7 @@ export default function App() {
                       msg += `*Customer Details:*\nName: ${userDetails.name}\nPhone: ${userDetails.phone}\nAddress: ${userDetails.address}, ${userDetails.city} - ${userDetails.pin}\n\n`;
                       msg += `*Order Summary:*\n`;
                       cartItems.forEach(item => {
-                        msg += `- ${item.product.name} (${item.weightLabel}) x${item.quantity}: ₹${item.calculatedPrice * item.quantity}\n`;
+                        msg += `- ${item.product.name.toUpperCase()} (${item.weightLabel}) x${item.quantity}: ₹${item.calculatedPrice * item.quantity}\n`;
                       });
                       msg += `\n*Subtotal:* ₹${subtotal}\n*Delivery:* ₹${delivery}\n*GST (12%):* ₹${gst}\n*Grand Total Paid via UPI:* ₹${total}`;
                       
@@ -554,6 +560,76 @@ export default function App() {
                   )}
                 </div>
               )}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Welcome Popup */}
+      <AnimatePresence>
+        {isWelcomeOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[70] bg-black/45 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 16 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[71] flex items-center justify-center p-4"
+            >
+              <div className="w-full max-w-4xl overflow-hidden rounded-3xl border border-orange-100 bg-white shadow-2xl">
+                <div className="grid grid-cols-1 md:grid-cols-[1.05fr_1.25fr]">
+                  <div className="relative min-h-[220px] bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-100 md:min-h-full">
+                    <img
+                      src={sweetsImg}
+                      alt="Neelagiri Foods welcome"
+                      className="h-full w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/20 via-transparent to-transparent" />
+                  </div>
+                  <div className="p-6 sm:p-8">
+                    <div className="mb-5">
+                      <h2 className="text-2xl font-display font-bold text-brand-red sm:text-3xl">
+                        Welcome to Neelagiri Foods 🍃
+                      </h2>
+                    </div>
+                    <div className="space-y-4 text-sm leading-7 text-gray-700 sm:text-base">
+                      <p>
+                        Experience the taste of freshness and tradition! At Neelagiri Foods, we bring you high-quality,
+                        delicious, and hygienic food made with love.
+                      </p>
+                      <div className="space-y-1 font-medium text-gray-800">
+                        <p>✨ Fresh Ingredients</p>
+                        <p>✨ Authentic Taste</p>
+                        <p>✨ Fast Delivery</p>
+                      </div>
+                      <p>Order now and enjoy a delightful food experience!</p>
+                    </div>
+                    <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                      <button
+                        onClick={() => {
+                          setCurrentView('store');
+                          setIsWelcomeOpen(false);
+                        }}
+                        className="inline-flex flex-1 items-center justify-center rounded-xl bg-green-600 px-5 py-3 font-semibold text-white transition-colors hover:bg-green-700"
+                      >
+                        Explore Menu
+                      </button>
+                      <button
+                        onClick={() => setIsWelcomeOpen(false)}
+                        className="inline-flex flex-1 items-center justify-center rounded-xl border border-gray-200 bg-white px-5 py-3 font-semibold text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </>
         )}

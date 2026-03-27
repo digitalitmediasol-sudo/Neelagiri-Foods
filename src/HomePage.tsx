@@ -249,7 +249,7 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
             <ul className="space-y-4">
               <li className="flex items-start justify-center gap-4 text-center text-gray-300 transition-colors hover:text-white md:justify-end md:text-right">
                 <span className="mt-1 text-brand-gold text-xl shrink-0">📍</span>
-                <span>Nalgonda, Telangana, India</span>
+                <span>Nalgonda & Hyderabad, Telangana, India</span>
               </li>
               <li className="flex items-center justify-center gap-4 text-center text-gray-300 transition-colors hover:text-white md:justify-end md:text-right">
                 <span className="text-brand-gold text-xl shrink-0">📞</span>
