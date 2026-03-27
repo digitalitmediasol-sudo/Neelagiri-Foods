@@ -15,7 +15,7 @@ const WhatsAppIcon = ({ size = 24, className = "" }: { size?: number, className?
 );
 
 // Delivery Config
-const DELIVERY_CHARGE_NALGONDA = 100;
+const DELIVERY_CHARGE_NALGONDA = 50;
 const DELIVERY_CHARGE_OTHER = 100;
 const DELIVERY_CHARGE_PER_KG_OTHER = 30;
 
@@ -91,7 +91,7 @@ export default function App() {
   const perKgDeliveryCharge = location === 'Nalgonda' ? 0 : DELIVERY_CHARGE_PER_KG_OTHER;
   const weightDeliveryCharge = subtotal > 0 ? chargeableWeightKg * perKgDeliveryCharge : 0;
   const delivery = subtotal > 0 ? baseDelivery + weightDeliveryCharge : 0;
-  const gst = subtotal > 0 ? Math.round((subtotal + delivery) * 0.12) : 0; // 12% GST on items + delivery
+  const gst = subtotal > 0 ? Math.round((subtotal + delivery) * 0.08) : 0; // 8% GST on items + delivery
   const total = subtotal + delivery + gst;
 
   // Multi-panel layout logic
@@ -465,7 +465,7 @@ export default function App() {
                       cartItems.forEach(item => {
                         msg += `- ${item.product.name.toUpperCase()} (${item.weightLabel}) x${item.quantity}: ₹${item.calculatedPrice * item.quantity}\n`;
                       });
-                      msg += `\n*Subtotal:* ₹${subtotal}\n*Delivery:* ₹${delivery}\n*GST (12%):* ₹${gst}\n*Grand Total Paid via UPI:* ₹${total}`;
+                      msg += `\n*Subtotal:* ₹${subtotal}\n*Delivery:* ₹${delivery}\n*GST (8%):* ₹${gst}\n*Grand Total Paid via UPI:* ₹${total}`;
                       
                       const fireWhatsApp = (num: string, delay: number) => {
                         setTimeout(() => {
@@ -527,7 +527,7 @@ export default function App() {
                       <span>{totalWeightKg.toFixed(2)} kg</span>
                     </div>
                     <div className="flex justify-between text-sm text-gray-600">
-                      <span className="flex items-center gap-2">Tax (GST 12%)</span>
+                      <span className="flex items-center gap-2">Tax (GST 8%)</span>
                       <span>₹{gst}</span>
                     </div>
                     <div className="pt-3 pb-1 border-t border-gray-200 flex justify-between font-bold text-xl mt-2">
