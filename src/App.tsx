@@ -15,12 +15,15 @@ const WhatsAppIcon = ({ size = 24, className = "" }: { size?: number, className?
 
 // Delivery Config
 const DELIVERY_CHARGE_NALGONDA = 100;
-const DELIVERY_CHARGE_OTHER = 200;
+const DELIVERY_CHARGE_OTHER = 100;
+const DELIVERY_CHARGE_PER_KG_OTHER = 30;
 
 // Top Announcement
 const TopAnnouncement = () => (
-  <div className="bg-green-600 text-white py-2 px-4 text-center text-sm font-medium">
-    <p>Sri Rama Navami Subhakankshalu! Celebrate with Neelagiri Foods!</p>
+  <div className="overflow-hidden bg-green-600 py-2 text-white">
+    <div className="announcement-track whitespace-nowrap px-3 text-xs font-medium sm:px-4 sm:text-sm">
+      <span>Sri Rama Navami Subhakankshalu! Celebrate with Neelagiri Foods!</span>
+    </div>
   </div>
 );
 
@@ -80,8 +83,13 @@ export default function App() {
   }).filter(Boolean) as any[];
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.calculatedPrice * item.quantity), 0);
-  const delivery = subtotal > 0 ? (location === 'Nalgonda' ? DELIVERY_CHARGE_NALGONDA : DELIVERY_CHARGE_OTHER) : 0;
-  const gst = subtotal > 0 ? Math.round(subtotal * 0.12) : 0; // 12% GST
+  const totalWeightKg = cartItems.reduce((sum, item) => sum + ((item.weight * item.quantity) / 1000), 0);
+  const chargeableWeightKg = totalWeightKg > 0 ? Math.ceil(totalWeightKg) : 0;
+  const baseDelivery = location === 'Nalgonda' ? DELIVERY_CHARGE_NALGONDA : DELIVERY_CHARGE_OTHER;
+  const perKgDeliveryCharge = location === 'Nalgonda' ? 0 : DELIVERY_CHARGE_PER_KG_OTHER;
+  const weightDeliveryCharge = subtotal > 0 ? chargeableWeightKg * perKgDeliveryCharge : 0;
+  const delivery = subtotal > 0 ? baseDelivery + weightDeliveryCharge : 0;
+  const gst = subtotal > 0 ? Math.round((subtotal + delivery) * 0.12) : 0; // 12% GST on items + delivery
   const total = subtotal + delivery + gst;
 
   // Multi-panel layout logic
@@ -106,22 +114,22 @@ export default function App() {
         <TopAnnouncement />
         
         {/* Header */}
-        <header className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
-        <div className="max-w-[1400px] mx-auto px-4 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
-          <div className="flex items-center shrink-0">
+        <header className="border-b border-gray-100 bg-white/90 shadow-sm backdrop-blur-md">
+        <div className="mx-auto flex h-16 w-full max-w-[1400px] items-center gap-3 px-4 sm:h-20 sm:gap-4 sm:px-6 lg:px-8">
+          <div className="flex min-w-0 flex-1 items-center lg:flex-none lg:min-w-[15rem]">
             <button 
-              className="lg:hidden p-2 hover:bg-gray-100 rounded-md mr-1 text-gray-600"
+              className="mr-1 rounded-md p-2 text-gray-600 hover:bg-gray-100 lg:hidden"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <Menu size={24} />
             </button>
-            <button onClick={() => { setCurrentView('home'); setSearchQuery(''); }} className="flex items-center space-x-2 group">
-              <span className="text-xl sm:text-2xl font-display font-bold text-brand-red tracking-tight">Neelagiri <span className="text-brand-dark group-hover:text-brand-red transition-colors">Foods</span></span>
+            <button onClick={() => { setCurrentView('home'); setSearchQuery(''); }} className="group flex min-w-0 items-center space-x-2 text-left">
+              <span className="truncate text-lg font-display font-bold tracking-tight text-brand-red sm:text-2xl">Neelagiri <span className="text-brand-dark transition-colors group-hover:text-brand-red">Foods</span></span>
             </button>
           </div>
           
-          <div className="hidden lg:flex flex-1 justify-center items-center px-4">
-             <div className="flex items-center justify-around w-full max-w-5xl space-x-1 xl:space-x-4">
+          <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-center lg:px-4">
+             <div className="flex w-full max-w-5xl items-center justify-center gap-1 xl:gap-4">
                <button onClick={() => { setCurrentView('home'); setSearchQuery(''); }} className={twMerge("text-[13px] xl:text-sm font-bold transition-all px-3 py-2 rounded-full whitespace-nowrap", currentView === 'home' && !searchQuery ? "text-brand-red bg-brand-red/5" : "text-gray-600 hover:text-brand-red hover:bg-gray-50")}>Home</button>
                {CATEGORIES.map(category => (
                  <button
@@ -140,8 +148,8 @@ export default function App() {
              </div>
           </div>
           
-          <div className="flex items-center space-x-1 sm:space-x-2 shrink-0">
-            <div className="relative flex items-center group">
+          <div className="flex flex-1 items-center justify-end gap-1 sm:gap-2 lg:min-w-[15rem] lg:flex-none">
+            <div className="group relative flex items-center">
               <Search size={18} className="absolute left-3 text-gray-400 group-focus-within:text-brand-red transition-colors" />
               <input
                 type="text"
@@ -153,12 +161,12 @@ export default function App() {
                     setCurrentView('store');
                   }
                 }}
-                className="pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/20 w-[100px] xs:w-32 sm:w-48 lg:w-56 transition-all bg-gray-50 focus:bg-white placeholder-gray-400 placeholder:text-xs sm:placeholder:text-sm"
+                className="w-[100px] rounded-full border border-gray-200 bg-gray-50 py-2 pl-10 pr-4 text-sm transition-all placeholder:text-xs placeholder:text-gray-400 focus:bg-white focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/20 xs:w-32 sm:w-48 sm:placeholder:text-sm lg:w-56"
               />
             </div>
             
             <button 
-              className="p-2 relative text-gray-600 hover:bg-gray-100 rounded-full transition-all flex items-center justify-center shrink-0 ml-1 active:scale-95"
+              className="relative ml-1 flex shrink-0 items-center justify-center rounded-full p-2 text-gray-600 transition-all hover:bg-gray-100 active:scale-95"
               onClick={() => setIsCartOpen(true)}
             >
               <ShoppingBag size={22} className={cart.length > 0 ? "text-brand-red" : ""} />
@@ -186,20 +194,20 @@ export default function App() {
           onRemove={removeFromCart}
         />
       ) : (
-      <main className="flex-1 flex overflow-hidden">
+      <main className="flex-1">
         {/* Content Area */}
-        <div className="flex-1 overflow-y-auto px-2 sm:px-6 lg:px-8 pt-4 pb-20 scroll-smooth" style={{ height: 'calc(100vh - 4rem)' }}>
-          <div className="max-w-7xl mx-auto space-y-4 sm:space-y-8">
-            <div className="mb-4 sm:mb-8 px-2">
-              <h2 className="text-2xl sm:text-3xl font-display font-bold mb-1 sm:mb-2 text-brand-dark">
+        <div className="h-full px-4 pt-6 pb-20 scroll-smooth sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl space-y-6 sm:space-y-8">
+            <div className="px-1 sm:px-2">
+              <h2 className="text-2xl font-display font-bold text-brand-dark sm:text-3xl">
                 {searchQuery ? `Search Results for "${searchQuery}"` : CATEGORIES.find(c => c.id === activeCategory)?.name}
               </h2>
-              <p className="text-sm sm:text-base text-gray-500 max-w-2xl">
+              <p className="mt-1 max-w-2xl text-sm text-gray-500 sm:mt-2 sm:text-base">
                 {searchQuery ? 'Showing products matching your search query.' : 'Discover authentic flavors prepared with love and tradition.'}
               </p>
             </div>
             
-            <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+            <div className="grid grid-cols-1 gap-4 xs:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
               <AnimatePresence>
                 {activeProducts.map((product) => (
                   <motion.div
@@ -400,11 +408,21 @@ export default function App() {
                     <h3 className="font-bold text-gray-800 border-b pb-2">Where should we deliver?</h3>
                     <div className="space-y-3">
                       <input required value={userDetails.name} onChange={e => setUserDetails({...userDetails, name: e.target.value})} type="text" placeholder="Full Name" className="w-full border border-gray-200 rounded-lg px-3 py-2.5 focus:border-brand-red outline-none" />
-                      <input required value={userDetails.phone} onChange={e => setUserDetails({...userDetails, phone: e.target.value})} type="tel" placeholder="Phone Number" className="w-full border border-gray-200 rounded-lg px-3 py-2.5 focus:border-brand-red outline-none" />
+                      <input
+                        required
+                        value={userDetails.phone}
+                        onChange={e => setUserDetails({...userDetails, phone: e.target.value.replace(/\D/g, '').slice(0, 10)})}
+                        type="tel"
+                        inputMode="numeric"
+                        pattern="[0-9]{10}"
+                        maxLength={10}
+                        placeholder="10-digit Phone Number"
+                        className="w-full border border-gray-200 rounded-lg px-3 py-2.5 focus:border-brand-red outline-none"
+                      />
                       <textarea required value={userDetails.address} onChange={e => setUserDetails({...userDetails, address: e.target.value})} placeholder="Full Delivery Address" rows={3} className="w-full border border-gray-200 rounded-lg px-3 py-2 focus:border-brand-red outline-none resize-none"></textarea>
-                      <div className="flex gap-2">
-                        <input required value={userDetails.city} onChange={e => setUserDetails({...userDetails, city: e.target.value})} type="text" placeholder="City" className="w-2/3 border border-gray-200 rounded-lg px-3 py-2.5 focus:border-brand-red outline-none" />
-                        <input required value={userDetails.pin} onChange={e => setUserDetails({...userDetails, pin: e.target.value})} type="text" placeholder="PIN Code" className="w-1/3 border border-gray-200 rounded-lg px-3 py-2.5 focus:border-brand-red outline-none" />
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-[2fr_1fr] sm:gap-2">
+                        <input required value={userDetails.city} onChange={e => setUserDetails({...userDetails, city: e.target.value})} type="text" placeholder="City" className="w-full border border-gray-200 rounded-lg px-3 py-2.5 focus:border-brand-red outline-none" />
+                        <input required value={userDetails.pin} onChange={e => setUserDetails({...userDetails, pin: e.target.value})} type="text" placeholder="PIN Code" className="w-full border border-gray-200 rounded-lg px-3 py-2.5 focus:border-brand-red outline-none" />
                       </div>
                     </div>
                     <button type="submit" className="w-full bg-brand-dark text-white py-3 rounded-lg font-bold mt-4 hover:bg-black transition-colors">
@@ -419,7 +437,7 @@ export default function App() {
                       The amount <span className="text-brand-red font-bold">₹{total}</span> will be pre-filled automatically.
                     </p>
                     
-                    <div className="w-64 h-64 bg-white border-4 border-brand-gold/20 rounded-2xl flex items-center justify-center mb-6 overflow-hidden relative shadow-md p-3">
+                    <div className="aspect-square w-full max-w-[16rem] bg-white border-4 border-brand-gold/20 rounded-2xl flex items-center justify-center mb-6 overflow-hidden relative shadow-md p-3 sm:max-w-[18rem]">
                       <img 
                         src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(`upi://pay?pa=9014614826@ybl&pn=Neelagiri Foods&cu=INR&am=${total}&tn=Order from Neelagiri Foods`)}`} 
                         alt="UPI QR Code" 
@@ -491,12 +509,12 @@ export default function App() {
                 <div className="border-t border-gray-100 bg-white p-5 space-y-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-10">
                   <div className="space-y-2">
                     {checkoutStep === 'cart' && (
-                      <div className="flex items-center justify-between text-sm text-gray-600 pb-2 border-b border-gray-100 mb-2">
+                      <div className="mb-2 flex items-center justify-between gap-3 border-b border-gray-100 pb-2 text-sm text-gray-600">
                         <span className="flex items-center gap-2"><MapPin size={16} /> Delivery Area</span>
                         <select 
                           value={location} 
                           onChange={(e) => setLocation(e.target.value as any)}
-                          className="bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 outline-none focus:border-brand-red"
+                          className="w-[9rem] rounded-lg border border-gray-200 bg-gray-50 px-2 py-1 text-right outline-none focus:border-brand-red"
                         >
                           <option value="Nalgonda">Nalgonda Dist</option>
                           <option value="Other">Other locations</option>
@@ -511,6 +529,14 @@ export default function App() {
                     <div className="flex justify-between text-sm text-gray-600">
                       <span className="flex items-center gap-2"><Truck size={14} /> Delivery Charge</span>
                       <span>₹{delivery}</span>
+                    </div>
+                    <div className="flex justify-between text-xs text-gray-500">
+                      <span>Delivery rate</span>
+                      <span>₹{baseDelivery} + ₹{perKgDeliveryCharge} x {chargeableWeightKg} kg</span>
+                    </div>
+                    <div className="flex justify-between text-xs text-gray-500">
+                      <span>Total weight</span>
+                      <span>{totalWeightKg.toFixed(2)} kg</span>
                     </div>
                     <div className="flex justify-between text-sm text-gray-600">
                       <span className="flex items-center gap-2">Tax (GST 12%)</span>

@@ -28,7 +28,7 @@ export default function ProductCard({ product, cart, onAdd, onRemove, className 
   const cartItem = cart.find(c => c.cartId === cartId);
 
   return (
-    <div className={twMerge("bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300 group flex flex-col", className)}>
+    <div className={twMerge("group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg", className)}>
       <div className="aspect-[4/3] relative overflow-hidden bg-gray-100 shrink-0">
         <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         {product.isBestSeller && (
@@ -37,19 +37,19 @@ export default function ProductCard({ product, cart, onAdd, onRemove, className 
           </div>
         )}
       </div>
-      <div className="p-5 flex flex-col flex-1">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="font-bold text-lg leading-tight flex-1">{product.name}</h3>
+      <div className="flex flex-1 flex-col p-5">
+        <div className="mb-2 flex items-start justify-between gap-3">
+          <h3 className="flex-1 text-lg font-bold leading-tight">{product.name}</h3>
           <span className="font-bold text-brand-red ml-2 whitespace-nowrap">₹{productPrice}</span>
         </div>
-        <p className="text-sm text-gray-500 mb-4 line-clamp-2">{product.description}</p>
+        <p className="mb-4 min-h-[2.5rem] text-sm text-gray-500 line-clamp-2">{product.description}</p>
         
-        <div className="flex bg-gray-50 rounded-lg p-1 mb-4 mt-auto border border-gray-100 shrink-0">
+        <div className="mt-auto mb-4 flex shrink-0 rounded-lg border border-gray-100 bg-gray-50 p-1">
           {[250, 500, 1000].map(w => (
             <button 
               key={w}
               onClick={() => setWeight(w as any)}
-              className={twMerge("flex-1 py-1.5 text-xs font-bold rounded-md transition-colors", weight === w ? "bg-white text-brand-red shadow-sm border border-gray-100" : "text-gray-500 hover:text-gray-700")}
+              className={twMerge("flex-1 rounded-md px-1 py-1.5 text-center text-xs font-bold transition-colors", weight === w ? "border border-gray-100 bg-white text-brand-red shadow-sm" : "text-gray-500 hover:text-gray-700")}
             >
               {w === 1000 ? '1 kg' : `${w} gms`}
             </button>
@@ -57,13 +57,13 @@ export default function ProductCard({ product, cart, onAdd, onRemove, className 
         </div>
 
         {cartItem ? (
-           <div className="flex items-center justify-between bg-gray-50 rounded-lg p-1.5 border border-gray-100 mt-auto shrink-0">
+           <div className="mt-auto flex shrink-0 items-center justify-between rounded-lg border border-gray-100 bg-gray-50 p-1.5">
               <button onClick={() => onRemove(cartId)} className="w-8 h-8 flex items-center justify-center rounded-md bg-white shadow-sm text-gray-600 hover:text-brand-red">-</button>
               <span className="font-semibold w-8 text-center">{cartItem.quantity}</span>
               <button onClick={() => onAdd(product.id, weight)} className="w-8 h-8 flex items-center justify-center rounded-md bg-white shadow-sm text-gray-600 hover:text-green-600">+</button>
            </div>
         ) : (
-           <button onClick={() => onAdd(product.id, weight)} className="w-full py-2.5 bg-brand-red/10 text-brand-red font-semibold rounded-lg hover:bg-brand-red hover:text-white transition-colors duration-300 mt-auto shrink-0">
+           <button onClick={() => onAdd(product.id, weight)} className="mt-auto w-full shrink-0 rounded-lg bg-brand-red/10 py-2.5 font-semibold text-brand-red transition-colors duration-300 hover:bg-brand-red hover:text-white">
              Add to Cart
            </button>
         )}

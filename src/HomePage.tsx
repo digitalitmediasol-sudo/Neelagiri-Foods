@@ -19,17 +19,17 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
   return (
     <div className="flex-1 overflow-y-auto">
       {/* Hero Section */}
-      <div className="relative text-white py-28 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden shadow-sm flex items-center min-h-[500px]">
+      <div className="relative flex min-h-[440px] items-center overflow-hidden px-4 py-20 text-white shadow-sm sm:min-h-[500px] sm:px-6 sm:py-24 md:py-32 lg:px-8 lg:py-36">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroBg})` }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
-        <div className="max-w-7xl mx-auto w-full relative z-10 text-left pl-0 lg:pl-4">
+        <div className="relative z-10 mx-auto w-full max-w-7xl text-left lg:pl-4">
           <motion.h1 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-4xl md:text-5xl lg:text-7xl font-display font-bold mb-6 max-w-2xl drop-shadow-lg leading-tight"
+            className="mb-5 max-w-xl text-3xl leading-tight font-display font-bold drop-shadow-lg sm:max-w-2xl sm:text-4xl md:text-5xl lg:text-7xl"
           >
             Excellence in Every Bite
           </motion.h1>
@@ -37,7 +37,7 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl max-w-xl mb-10 text-gray-100 font-medium drop-shadow-md"
+            className="mb-8 max-w-lg text-base font-medium text-gray-100 drop-shadow-md sm:text-lg md:mb-10 md:text-xl"
           >
             Discover the authentic taste of tradition. We bring you the finest sweets, namkeen, and pickles made with pure ingredients and lots of love.
           </motion.p>
@@ -46,7 +46,7 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
             onClick={onNavigateToStore}
-            className="bg-brand-gold text-brand-dark px-8 py-3.5 rounded-full font-bold text-lg hover:bg-yellow-400 hover:scale-105 shadow-xl shadow-black/20 transition-all flex items-center gap-2"
+            className="inline-flex items-center gap-2 rounded-full bg-brand-gold px-6 py-3 text-base font-bold text-brand-dark shadow-xl shadow-black/20 transition-all hover:scale-105 hover:bg-yellow-400 sm:px-8 sm:py-3.5 sm:text-lg"
           >
             <ShoppingBag size={20} />
             Shop Now
@@ -55,8 +55,8 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
       </div>
 
       {/* Quotation Section */}
-      <div className="bg-brand-cream/50 py-20 px-4 sm:px-6 lg:px-8 border-b border-brand-red/5">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="border-b border-brand-red/5 bg-brand-cream/50 px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -78,12 +78,12 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
       </div>
 
       {/* Categories Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-display font-bold text-brand-dark mb-4">Shop by Category</h2>
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+        <div className="mb-10 text-center sm:mb-12">
+          <h2 className="mb-4 text-2xl font-display font-bold text-brand-dark sm:text-3xl">Shop by Category</h2>
           <div className="w-20 h-1 bg-brand-gold mx-auto rounded-full"></div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5 sm:gap-6">
           {CATEGORIES.map((category, index) => (
             <motion.div
               key={category.id}
@@ -92,7 +92,7 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
               onClick={() => onNavigateToCategory(category.id)}
-              className="cursor-pointer group relative rounded-2xl overflow-hidden aspect-square border border-gray-100 shadow-sm hover:shadow-xl transition-all"
+              className="group relative aspect-square cursor-pointer overflow-hidden rounded-2xl border border-gray-100 shadow-sm transition-all hover:shadow-xl"
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
               {typeof category.image === 'string' ? (
@@ -103,7 +103,7 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
                 </div>
               )}
               <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
-                <h3 className="text-white font-bold text-lg flex justify-between items-center">
+                <h3 className="flex items-center justify-between text-base font-bold text-white sm:text-lg">
                   {category.name}
                   <ArrowRight size={16} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                 </h3>
@@ -114,15 +114,15 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
       </div>
 
       {/* Best Sellers Section */}
-      <div className="bg-gray-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-display font-bold text-brand-dark mb-4">Our Best Sellers</h2>
+      <div className="bg-gray-50 py-14 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center sm:mb-12">
+            <h2 className="mb-4 text-2xl font-display font-bold text-brand-dark sm:text-3xl">Our Best Sellers</h2>
             <div className="w-20 h-1 bg-brand-gold mx-auto rounded-full"></div>
             <p className="mt-4 text-gray-500 max-w-2xl mx-auto">The most loved delicacies by our customers. Handcrafted to perfection.</p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {bestSellers.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -154,11 +154,11 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
       </div>
 
       {/* History Section */}
-      <div className="bg-white py-24 px-4 sm:px-6 lg:px-8 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+      <div className="border-t border-gray-100 bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-12 lg:flex-row lg:gap-20">
           
           {/* Left Side: Sweets Image */}
-          <div className="w-full lg:w-1/2 relative p-4 lg:p-8">
+          <div className="relative flex w-full justify-center p-2 sm:p-4 lg:w-1/2 lg:justify-start lg:p-8">
             <div className="absolute top-0 left-0 w-full h-full bg-brand-gold/10 rounded-[3rem] -z-10 transform -rotate-3 transition-transform hover:rotate-0 duration-500"></div>
             <div className="absolute bottom-0 right-0 w-full h-full bg-brand-red/5 rounded-[3rem] -z-10 transform rotate-3 transition-transform hover:rotate-0 duration-500"></div>
             <motion.div 
@@ -168,12 +168,12 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
                transition={{ duration: 0.5 }}
                className="relative z-10 w-full flex justify-center items-center"
             >
-              <img src={CATEGORIES[0].image as string} alt="Sweets Tradition" className="w-full max-w-md lg:max-w-lg aspect-square object-cover rounded-full drop-shadow-2xl hover:scale-105 transition-transform duration-700 border-8 border-white" />
+              <img src={CATEGORIES[0].image as string} alt="Sweets Tradition" className="aspect-square w-full max-w-[18rem] rounded-full border-8 border-white object-cover drop-shadow-2xl transition-transform duration-700 hover:scale-105 sm:max-w-md lg:max-w-lg" />
             </motion.div>
           </div>
 
           {/* Right Side: History Text */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-center">
+          <div className="flex w-full flex-col justify-center text-center lg:w-1/2 lg:text-left">
             <motion.div
                initial={{ opacity: 0, x: 30 }}
                whileInView={{ opacity: 1, x: 0 }}
@@ -181,15 +181,15 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
                transition={{ delay: 0.1 }}
             >
               <h4 className="text-brand-gold font-bold uppercase tracking-widest text-sm mb-3">Our Legacy</h4>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-brand-dark mb-6 leading-tight">
+              <h2 className="mb-6 text-3xl leading-tight font-display font-bold text-brand-dark md:text-4xl lg:text-5xl">
                 A Journey of Taste and Tradition
               </h2>
-              <div className="w-20 h-1 bg-brand-red mb-8"></div>
+              <div className="mb-8 h-1 w-20 bg-brand-red lg:mx-0 mx-auto"></div>
               
-              <p className="text-gray-600 mb-6 leading-relaxed text-lg">
+              <p className="mb-6 text-base leading-relaxed text-gray-600 sm:text-lg">
                 The story of Neelagiri Foods began decades ago with a simple mission: to preserve and share the authentic cultural flavors exactly as they were celebrated by our ancestors. What started as a small, passionate endeavor has grown into a deeply rooted tradition of excellence.
               </p>
-              <p className="text-gray-600 mb-8 leading-relaxed text-lg">
+              <p className="mb-8 text-base leading-relaxed text-gray-600 sm:text-lg">
                 Crafted meticulously using pure, premium ingredients and time-honored family recipes, our journey is built upon uncompromising quality. From grand festive celebrations to those everyday moments of joy, Neelagiri Foods continues to bring sweetness directly to the heart of your home.
               </p>
               
@@ -200,30 +200,30 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
       </div>
 
       {/* Contact Banner Section */}
-      <div id="contact" className="bg-brand-cream/30 py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+      <div id="contact" className="bg-brand-cream/30 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+        <div className="mx-auto max-w-4xl">
           <motion.div 
              initial={{ opacity: 0, y: 20 }}
              whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }}
-             className="bg-white p-8 md:p-10 rounded-2xl border border-brand-gold/20 shadow-lg flex flex-col md:flex-row items-center justify-between gap-8"
+             className="flex flex-col items-stretch justify-between gap-6 rounded-2xl border border-brand-gold/20 bg-white p-6 shadow-lg sm:p-8 md:flex-row md:items-center md:gap-8 md:p-10"
           >
             <div className="flex-1 text-center md:text-left">
               <h3 className="font-bold text-2xl text-brand-dark mb-2">Get in Touch</h3>
               <p className="text-gray-600 text-base md:text-lg">We'd love to hear from you. Contact us directly for bulk orders or any inquiries.</p>
             </div>
-            <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+            <div className="flex w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center md:w-auto">
               <a 
                 href="https://wa.me/919014614826?text=Hi%20Neelagiri%20Foods!%20I%20have%20an%20inquiry%20regarding%20bulk%20orders." 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex flex-1 sm:flex-none w-full sm:w-auto items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3.5 rounded-xl font-bold shadow-md hover:bg-green-600 hover:scale-105 transition-transform whitespace-nowrap"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 font-bold text-white shadow-md transition-transform hover:scale-105 hover:bg-green-600 sm:w-auto sm:flex-1 md:flex-none"
               >
                 WhatsApp Us
               </a>
               <a 
                 href="tel:+919014614826" 
-                className="inline-flex flex-1 sm:flex-none w-full sm:w-auto items-center justify-center bg-white border-2 border-gray-200 text-gray-700 px-6 py-3.5 rounded-xl font-bold shadow-sm hover:border-brand-red hover:text-brand-red whitespace-nowrap transition-colors"
+                className="inline-flex w-full items-center justify-center rounded-xl border-2 border-gray-200 bg-white px-6 py-3.5 font-bold text-gray-700 shadow-sm transition-colors hover:border-brand-red hover:text-brand-red sm:w-auto sm:flex-1 md:flex-none"
               >
                 Call: +91 9014614826
               </a>
@@ -233,29 +233,29 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
       </div>
 
       {/* Footer Section */}
-      <footer className="bg-brand-dark text-white pt-16 pb-8 px-4 sm:px-6 lg:px-8 border-t-4 border-brand-gold">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+      <footer className="border-t-4 border-brand-gold bg-brand-dark px-4 pt-14 pb-8 text-white sm:px-6 sm:pt-16 lg:px-8">
+        <div className="mx-auto mb-12 grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-2">
           {/* Brand Info (Left) */}
-          <div className="order-2 md:order-1">
+          <div className="order-2 text-center md:order-1 md:text-left">
             <h2 className="text-3xl font-display font-bold text-brand-gold mb-4">Neelagiri Foods</h2>
-            <p className="text-gray-400 leading-relaxed max-w-md">
+            <p className="mx-auto max-w-md leading-relaxed text-gray-400 md:mx-0">
               Bringing you the finest authentic Sweets, Namkeen, Pickles and Masalas made with pure ingredients, traditional recipes, and lots of love. Excellence in every bite.
             </p>
           </div>
 
           {/* Contact Details (Right) */}
-          <div className="order-1 md:order-2 md:text-right flex flex-col md:items-end">
+          <div className="order-1 flex flex-col items-center text-center md:order-2 md:items-end md:text-right">
             <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-widest border-b border-gray-700 pb-2 inline-block">Contact Us</h3>
             <ul className="space-y-4">
-              <li className="flex items-start md:justify-end gap-4 text-gray-300 hover:text-white transition-colors text-right">
+              <li className="flex items-start justify-center gap-4 text-center text-gray-300 transition-colors hover:text-white md:justify-end md:text-right">
                 <span className="mt-1 text-brand-gold text-xl shrink-0">📍</span>
                 <span>Nalgonda, Telangana, India</span>
               </li>
-              <li className="flex items-center md:justify-end gap-4 text-gray-300 hover:text-white transition-colors text-right">
+              <li className="flex items-center justify-center gap-4 text-center text-gray-300 transition-colors hover:text-white md:justify-end md:text-right">
                 <span className="text-brand-gold text-xl shrink-0">📞</span>
                 <a href="tel:+919014614826" className="font-medium">+91 90146 14826</a>
               </li>
-              <li className="flex items-center md:justify-end gap-4 text-gray-300 hover:text-white transition-colors text-right">
+              <li className="flex items-center justify-center gap-4 text-center text-gray-300 transition-colors hover:text-white md:justify-end md:text-right">
                 <span className="text-brand-gold text-xl shrink-0">📞</span>
                 <a href="tel:+917680976577" className="font-medium">+91 76809 76577</a>
               </li>
@@ -263,9 +263,9 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
           </div>
         </div>
         
-        <div className="max-w-7xl mx-auto pt-8 border-t border-gray-800/50 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-          <p className="mb-4 md:mb-0">&copy; {new Date().getFullYear()} Neelagiri Foods. All rights reserved.</p>
-          <div className="flex gap-4">
+        <div className="max-w-7xl mx-auto flex flex-col items-center justify-between gap-4 border-t border-gray-800/50 pt-8 text-center text-sm text-gray-500 md:flex-row md:text-left">
+          <p>&copy; {new Date().getFullYear()} Neelagiri Foods. All rights reserved.</p>
+          <div className="flex flex-wrap items-center justify-center gap-4 md:justify-end">
              <button className="hover:text-brand-gold transition-colors">Privacy Policy</button>
              <button className="hover:text-brand-gold transition-colors">Terms of Service</button>
           </div>

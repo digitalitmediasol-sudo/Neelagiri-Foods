@@ -17,11 +17,35 @@
 
 @layer base {
   html {
-    /* Scale down the entire site by reducing the root rem unit size */
-    font-size: 80%; 
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
   }
   body {
     @apply bg-brand-cream text-brand-dark font-sans;
   }
+  * {
+    box-sizing: border-box;
+  }
+  img {
+    display: block;
+    max-width: 100%;
+  }
 }
 
+@keyframes announcement-marquee {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@layer components {
+  .announcement-track {
+    display: inline-block;
+    min-width: max-content;
+    will-change: transform;
+    animation: announcement-marquee 14s linear infinite;
+  }
+}
