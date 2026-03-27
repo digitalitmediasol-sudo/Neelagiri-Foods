@@ -63,11 +63,11 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
             viewport={{ once: true }}
             className="relative"
           >
-            <span className="text-8xl text-brand-gold/20 absolute -top-10 md:-left-8 font-serif select-none pointer-events-none">"</span>
-            <p className="text-2xl md:text-3xl lg:text-4xl font-display font-medium text-brand-red leading-relaxed italic z-10 relative px-4 md:px-12">
+            <span className="text-4xl sm:text-8xl text-brand-gold/20 absolute -top-4 sm:-top-10 md:-left-8 font-serif select-none pointer-events-none">"</span>
+            <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-medium text-brand-red leading-relaxed italic z-10 relative px-2 sm:px-4 md:px-12">
               Our passion lies in preserving the authentic taste of tradition. Every bite is an experience crafted with purity, devotion, and a legacy that spans generations.
             </p>
-            <span className="text-8xl text-brand-gold/20 absolute -bottom-16 md:-right-8 font-serif select-none pointer-events-none rotate-180">"</span>
+            <span className="text-4xl sm:text-8xl text-brand-gold/20 absolute -bottom-8 sm:-bottom-16 md:-right-8 font-serif select-none pointer-events-none rotate-180">"</span>
             
             <div className="mt-10 flex flex-col items-center">
               <div className="w-12 h-1 bg-brand-gold mb-4 rounded-full"></div>
@@ -234,42 +234,31 @@ export default function HomePage({ onNavigateToStore, onNavigateToCategory, cart
 
       {/* Footer Section */}
       <footer className="bg-brand-dark text-white pt-16 pb-8 px-4 sm:px-6 lg:px-8 border-t-4 border-brand-gold">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-          {/* Brand Info */}
-          <div>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+          {/* Brand Info (Left) */}
+          <div className="order-2 md:order-1">
             <h2 className="text-3xl font-display font-bold text-brand-gold mb-4">Neelagiri Foods</h2>
-            <p className="text-gray-400 leading-relaxed mb-6">
+            <p className="text-gray-400 leading-relaxed max-w-md">
               Bringing you the finest authentic Sweets, Namkeen, Pickles and Masalas made with pure ingredients, traditional recipes, and lots of love. Excellence in every bite.
             </p>
           </div>
 
-          {/* Contact Details */}
-          <div>
+          {/* Contact Details (Right) */}
+          <div className="order-1 md:order-2 md:text-right flex flex-col md:items-end">
             <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-widest border-b border-gray-700 pb-2 inline-block">Contact Us</h3>
             <ul className="space-y-4">
-              <li className="flex items-start gap-4 text-gray-300 hover:text-white transition-colors">
-                <span className="mt-1 text-brand-gold text-xl">📍</span>
+              <li className="flex items-start md:justify-end gap-4 text-gray-300 hover:text-white transition-colors text-right">
+                <span className="mt-1 text-brand-gold text-xl shrink-0">📍</span>
                 <span>Nalgonda, Telangana, India</span>
               </li>
-              <li className="flex items-center gap-4 text-gray-300 hover:text-white transition-colors">
-                <span className="text-brand-gold text-xl">📞</span>
+              <li className="flex items-center md:justify-end gap-4 text-gray-300 hover:text-white transition-colors text-right">
+                <span className="text-brand-gold text-xl shrink-0">📞</span>
                 <a href="tel:+919014614826" className="font-medium">+91 90146 14826</a>
               </li>
-              <li className="flex items-center gap-4 text-gray-300 hover:text-white transition-colors">
-                <span className="text-brand-gold text-xl">✉️</span>
-                <a href="mailto:info@neelagirifoods.com">info@neelagirifoods.com</a>
+              <li className="flex items-center md:justify-end gap-4 text-gray-300 hover:text-white transition-colors text-right">
+                <span className="text-brand-gold text-xl shrink-0">📞</span>
+                <a href="tel:+917680976577" className="font-medium">+91 76809 76577</a>
               </li>
-            </ul>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-widest border-b border-gray-700 pb-2 inline-block">Quick Links</h3>
-            <ul className="space-y-3">
-              <li><button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="text-gray-400 hover:text-brand-gold transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-brand-gold" /> Home Page</button></li>
-              <li><button onClick={onNavigateToStore} className="text-gray-400 hover:text-brand-gold transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-brand-gold" /> Shop Menu</button></li>
-              <li><button className="text-gray-400 hover:text-brand-gold transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-brand-gold" /> About Us</button></li>
-              <li><button className="text-gray-400 hover:text-brand-gold transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-brand-gold" /> Bulk Orders</button></li>
             </ul>
           </div>
         </div>

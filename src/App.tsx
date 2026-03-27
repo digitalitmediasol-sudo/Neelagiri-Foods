@@ -107,25 +107,22 @@ export default function App() {
         
         {/* Header */}
         <header className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-[1400px] mx-auto px-4 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
           <div className="flex items-center shrink-0">
             <button 
-              className="lg:hidden p-2 hover:bg-gray-100 rounded-md mr-1 lg:mr-2 text-gray-600"
+              className="lg:hidden p-2 hover:bg-gray-100 rounded-md mr-1 text-gray-600"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <Menu size={24} />
             </button>
-            <button onClick={() => { setCurrentView('home'); setSearchQuery(''); }} className="text-2xl font-display font-bold text-brand-red hidden xl:block whitespace-nowrap">
-              Neelagiri Foods
-            </button>
-            <button onClick={() => { setCurrentView('home'); setSearchQuery(''); }} className="text-xl font-display font-bold text-brand-red xl:hidden whitespace-nowrap">
-              Neelagiri Foods
+            <button onClick={() => { setCurrentView('home'); setSearchQuery(''); }} className="flex items-center space-x-2 group">
+              <span className="text-xl sm:text-2xl font-display font-bold text-brand-red tracking-tight">Neelagiri <span className="text-brand-dark group-hover:text-brand-red transition-colors">Foods</span></span>
             </button>
           </div>
           
-          <div className="hidden lg:flex flex-1 justify-center items-center px-2 w-full">
-             <div className="flex items-center justify-around w-full max-w-4xl space-x-2 xl:space-x-4">
-               <button onClick={() => { setCurrentView('home'); setSearchQuery(''); }} className={twMerge("text-[13px] xl:text-sm font-bold transition-colors whitespace-nowrap", currentView === 'home' && !searchQuery ? "text-brand-red" : "text-gray-600 hover:text-brand-red")}>Home</button>
+          <div className="hidden lg:flex flex-1 justify-center items-center px-4">
+             <div className="flex items-center justify-around w-full max-w-5xl space-x-1 xl:space-x-4">
+               <button onClick={() => { setCurrentView('home'); setSearchQuery(''); }} className={twMerge("text-[13px] xl:text-sm font-bold transition-all px-3 py-2 rounded-full whitespace-nowrap", currentView === 'home' && !searchQuery ? "text-brand-red bg-brand-red/5" : "text-gray-600 hover:text-brand-red hover:bg-gray-50")}>Home</button>
                {CATEGORIES.map(category => (
                  <button
                    key={category.id}
@@ -134,17 +131,18 @@ export default function App() {
                      setCurrentView('store');
                      setSearchQuery('');
                    }}
-                   className={twMerge("text-[13px] xl:text-sm font-bold transition-colors whitespace-nowrap", currentView === 'store' && activeCategory === category.id && !searchQuery ? "text-brand-red" : "text-gray-600 hover:text-brand-red")}
+                   className={twMerge("text-[13px] xl:text-sm font-bold transition-all px-3 py-2 rounded-full whitespace-nowrap", currentView === 'store' && activeCategory === category.id && !searchQuery ? "text-brand-red bg-brand-red/5" : "text-gray-600 hover:text-brand-red hover:bg-gray-50")}
                  >
                    {category.name}
                  </button>
                ))}
-               <button onClick={() => { setCurrentView('home'); setTimeout(() => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }} className="text-[13px] xl:text-sm font-bold transition-colors whitespace-nowrap text-gray-600 hover:text-brand-red">Contact Us</button>
+               <button onClick={() => { setCurrentView('home'); setTimeout(() => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }} className="text-[13px] xl:text-sm font-bold transition-all px-3 py-2 rounded-full whitespace-nowrap text-gray-600 hover:text-brand-red hover:bg-gray-50">Contact Us</button>
              </div>
           </div>
           
-          <div className="flex items-center space-x-2 shrink-0">
-            <div className="hidden sm:flex relative items-center">
+          <div className="flex items-center space-x-1 sm:space-x-2 shrink-0">
+            <div className="relative flex items-center group">
+              <Search size={18} className="absolute left-3 text-gray-400 group-focus-within:text-brand-red transition-colors" />
               <input
                 type="text"
                 placeholder="Search..."
@@ -155,18 +153,17 @@ export default function App() {
                     setCurrentView('store');
                   }
                 }}
-                className="pl-9 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red w-32 md:w-48 xl:w-56 transition-all bg-gray-50 placeholder-gray-400"
+                className="pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/20 w-[100px] xs:w-32 sm:w-48 lg:w-56 transition-all bg-gray-50 focus:bg-white placeholder-gray-400 placeholder:text-xs sm:placeholder:text-sm"
               />
-              <Search size={16} className="absolute left-3 text-gray-400" />
             </div>
             
             <button 
-              className="p-2 relative text-gray-600 hover:bg-gray-100 rounded-full transition-colors flex items-center justify-center shrink-0 ml-1"
+              className="p-2 relative text-gray-600 hover:bg-gray-100 rounded-full transition-all flex items-center justify-center shrink-0 ml-1 active:scale-95"
               onClick={() => setIsCartOpen(true)}
             >
-              <ShoppingBag size={22} />
+              <ShoppingBag size={22} className={cart.length > 0 ? "text-brand-red" : ""} />
               {cart.length > 0 && (
-                <span className="absolute top-0 right-0 bg-brand-red text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
+                <span className="absolute -top-1 -right-1 bg-brand-red text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full ring-2 ring-white">
                   {cart.reduce((sum, item) => sum + item.quantity, 0)}
                 </span>
               )}
@@ -191,17 +188,18 @@ export default function App() {
       ) : (
       <main className="flex-1 flex overflow-hidden">
         {/* Content Area */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 scroll-smooth" style={{ height: 'calc(100vh - 4rem)' }}>
-          <div className="max-w-7xl mx-auto space-y-8 pb-20">
-            <div className="mb-8">
-              <h2 className="text-3xl font-display font-bold mb-2">
+        <div className="flex-1 overflow-y-auto px-2 sm:px-6 lg:px-8 pt-4 pb-20 scroll-smooth" style={{ height: 'calc(100vh - 4rem)' }}>
+          <div className="max-w-7xl mx-auto space-y-4 sm:space-y-8">
+            <div className="mb-4 sm:mb-8 px-2">
+              <h2 className="text-2xl sm:text-3xl font-display font-bold mb-1 sm:mb-2 text-brand-dark">
                 {searchQuery ? `Search Results for "${searchQuery}"` : CATEGORIES.find(c => c.id === activeCategory)?.name}
               </h2>
-              <p className="text-gray-500">
+              <p className="text-sm sm:text-base text-gray-500 max-w-2xl">
                 {searchQuery ? 'Showing products matching your search query.' : 'Discover authentic flavors prepared with love and tradition.'}
               </p>
             </div>
-                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+            
+            <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
               <AnimatePresence>
                 {activeProducts.map((product) => (
                   <motion.div
@@ -415,39 +413,73 @@ export default function App() {
                   </form>
                 ) : (
                   <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm text-center flex flex-col items-center">
-                    <h3 className="font-bold text-xl text-gray-800 mb-2">Pay via UPI</h3>
-                    <p className="text-gray-500 text-sm mb-6">Scan the QR code using any UPI app to safely complete your payment.</p>
-                    <div className="w-64 h-64 bg-gray-50 border border-gray-200 rounded-2xl flex items-center justify-center mb-4 overflow-hidden relative shadow-inner p-2">
+                    <h3 className="font-bold text-xl text-gray-800 mb-2">Secure UPI Payment</h3>
+                    <p className="text-gray-500 text-sm mb-6 leading-relaxed">
+                      Scan the QR code below using <span className="font-bold text-brand-dark">GPay, PhonePe, or Paytm</span>. 
+                      The amount <span className="text-brand-red font-bold">₹{total}</span> will be pre-filled automatically.
+                    </p>
+                    
+                    <div className="w-64 h-64 bg-white border-4 border-brand-gold/20 rounded-2xl flex items-center justify-center mb-6 overflow-hidden relative shadow-md p-3">
                       <img 
-                        src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(`upi://pay?pa=9014614826@ybl&pn=Neelagiri Foods&cu=INR&am=${total}`)}`} 
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(`upi://pay?pa=9014614826@ybl&pn=Neelagiri Foods&cu=INR&am=${total}&tn=Order from Neelagiri Foods`)}`} 
                         alt="UPI QR Code" 
-                        className="w-full h-full object-contain mix-blend-multiply" 
+                        className="w-full h-full object-contain" 
                       />
                     </div>
-                    <div className="w-full bg-green-50 p-3 rounded-lg text-green-800 text-sm font-semibold mb-6 flex items-center justify-center gap-2">
-                       <ShieldCheck size={18} className="text-green-600" />
-                       Accepted: GPay, PhonePe, Paytm
+
+                    <div className="flex items-center justify-center gap-4 mb-6">
+                      <div className="flex flex-col items-center gap-1">
+                        <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center border border-blue-100 shadow-sm">
+                          <span className="text-[10px] font-bold text-blue-600">GPay</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-center gap-1">
+                        <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center border border-purple-100 shadow-sm">
+                          <span className="text-[10px] font-bold text-purple-600">PhonePe</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-center gap-1">
+                        <div className="w-10 h-10 rounded-full bg-cyan-50 flex items-center justify-center border border-cyan-100 shadow-sm">
+                          <span className="text-[10px] font-bold text-cyan-600">Paytm</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="w-full bg-green-50 p-3 rounded-lg text-green-800 text-xs font-semibold mb-6 flex items-center justify-center gap-2 border border-green-100">
+                       <ShieldCheck size={16} className="text-green-600" />
+                       Amount Pre-filled & Encrypted
                     </div>
                     <button onClick={() => { 
+                      const numbers = ['919014614826', '917680976577'];
+                      setToastMessage(`Notifying ${numbers.length} admins...`);
+                      
                       let msg = `*New Order - Payment Completed!*\n\n`;
                       msg += `*Customer Details:*\nName: ${userDetails.name}\nPhone: ${userDetails.phone}\nAddress: ${userDetails.address}, ${userDetails.city} - ${userDetails.pin}\n\n`;
                       msg += `*Order Summary:*\n`;
                       cartItems.forEach(item => {
                         msg += `- ${item.product.name} (${item.weightLabel}) x${item.quantity}: ₹${item.calculatedPrice * item.quantity}\n`;
                       });
-                      msg += `\n*Subtotal:* ₹${subtotal}\n*Delivery:* ₹${delivery}\n*GST (12%):* ₹${gst}\n*Grand Total Paid via UPI:* ₹${total}\n\n_Please find my payment screenshot attached._`;
+                      msg += `\n*Subtotal:* ₹${subtotal}\n*Delivery:* ₹${delivery}\n*GST (12%):* ₹${gst}\n*Grand Total Paid via UPI:* ₹${total}`;
                       
-                      const waUrl = `https://wa.me/919014614826?text=${encodeURIComponent(msg)}`;
-                      window.open(waUrl, '_blank');
-                      
-                      setIsCartOpen(false); 
+                      const fireWhatsApp = (num: string, delay: number) => {
+                        setTimeout(() => {
+                           const url = `https://api.whatsapp.com/send/?phone=${num}&text=${encodeURIComponent(msg)}`;
+                           window.open(url, '_blank');
+                        }, delay);
+                      };
+
+                      // Open first WhatsApp
+                      fireWhatsApp(numbers[0], 100);
+                      // Open second WhatsApp after a small gap to minimize popup blocking
+                      fireWhatsApp(numbers[1], 1000);
+
                       setTimeout(() => { 
+                        setIsCartOpen(false); 
                         setCart([]); 
                         setCheckoutStep('cart'); 
                         setUserDetails({ name: '', phone: '', address: '', city: '', pin: '' });
-                        setToastMessage('Order sent to WhatsApp!'); 
                         setTimeout(() => setToastMessage(''), 4000); 
-                      }, 500); 
+                      }, 2500); 
                     }} className="w-full bg-brand-red text-white py-3 rounded-lg font-bold hover:bg-red-800 transition-colors shadow-md hover:shadow-lg">
                       I have completed the payment
                     </button>

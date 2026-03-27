@@ -10,6 +10,9 @@
   --color-brand-gold: #D4AF37;
   --color-brand-cream: #FDFBF7;
   --color-brand-dark: #1A1A1A;
+
+  /* Custom mobile breakpoints */
+  --breakpoint-xs: 400px;
 }
 
 @layer base {
