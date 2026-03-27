@@ -439,7 +439,7 @@ export default function App() {
                   <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm text-center flex flex-col items-center">
                     <h3 className="font-bold text-xl text-gray-800 mb-2">Secure UPI Payment</h3>
                     <p className="text-gray-500 text-sm mb-6 leading-relaxed">
-                      Scan the QR code below using <span className="font-bold text-brand-dark">GPay, PhonePe, or Paytm</span>. 
+                      Scan the QR code below with any UPI app.
                       The amount <span className="text-brand-red font-bold">₹{total}</span> will be pre-filled automatically.
                     </p>
                     
@@ -449,24 +449,6 @@ export default function App() {
                         alt="UPI QR Code" 
                         className="w-full h-full object-contain" 
                       />
-                    </div>
-
-                    <div className="flex items-center justify-center gap-4 mb-6">
-                      <div className="flex flex-col items-center gap-1">
-                        <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center border border-blue-100 shadow-sm">
-                          <span className="text-[10px] font-bold text-blue-600">GPay</span>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-center gap-1">
-                        <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center border border-purple-100 shadow-sm">
-                          <span className="text-[10px] font-bold text-purple-600">PhonePe</span>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-center gap-1">
-                        <div className="w-10 h-10 rounded-full bg-cyan-50 flex items-center justify-center border border-cyan-100 shadow-sm">
-                          <span className="text-[10px] font-bold text-cyan-600">Paytm</span>
-                        </div>
-                      </div>
                     </div>
 
                     <div className="w-full bg-green-50 p-3 rounded-lg text-green-800 text-xs font-semibold mb-6 flex items-center justify-center gap-2 border border-green-100">
@@ -610,21 +592,15 @@ export default function App() {
                       </div>
                       <p>Order now and enjoy a delightful food experience!</p>
                     </div>
-                    <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                    <div className="mt-8 flex justify-center">
                       <button
                         onClick={() => {
-                          setCurrentView('store');
+                          setCurrentView('home');
                           setIsWelcomeOpen(false);
                         }}
-                        className="inline-flex flex-1 items-center justify-center rounded-xl bg-green-600 px-5 py-3 font-semibold text-white transition-colors hover:bg-green-700"
+                        className="inline-flex min-w-[12rem] items-center justify-center rounded-xl bg-green-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-green-700"
                       >
-                        Explore Menu
-                      </button>
-                      <button
-                        onClick={() => setIsWelcomeOpen(false)}
-                        className="inline-flex flex-1 items-center justify-center rounded-xl border border-gray-200 bg-white px-5 py-3 font-semibold text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50"
-                      >
-                        Close
+                        Explore
                       </button>
                     </div>
                   </div>
